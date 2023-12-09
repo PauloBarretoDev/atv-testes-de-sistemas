@@ -12,12 +12,12 @@ public class AtvSeleniumTest {
     
     @Before
     public void setup(){
-        System.setProperty("webdriver.chrome.driver", "driver/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver");
     }
 
     @Test
     public void helloSelenium(){
-        System.setProperty("webdriver.chrome.driver", "driver/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
 
         driver.get("https://www.bing.com/?cc=br");
