@@ -1,30 +1,28 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
-
-import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 
 public class AtvSeleniumTest {
+
+    private WebDriver driver;
+
 
     @BeforeEach
     public void setup(){
         System.setProperty("webdriver.chrome.driver", "./driver/chromedriver");
+        driver = new ChromeDriver();
     }
 
     @Test
@@ -77,9 +75,7 @@ public class AtvSeleniumTest {
         driver.get("https://www.bing.com/?cc=br");
 
         // Encontrar o botão de pesquisa de imagens
-        WebElement imagesButton = driver.findElement(By.id("images"));
         new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("images"))).click();
-        // imagesButton.click();
 
         // Verificar se a página de pesquisa de imagens foi carregada
         assertTrue(driver.getCurrentUrl().contains("https://www.bing.com/images/feed?form=Z9LH"));
@@ -111,13 +107,26 @@ public class AtvSeleniumTest {
         WebDriver driver = new ChromeDriver();
         driver.get("https://www.bing.com/?cc=br");
 
-        // Encontrar o botão de pesquisa de imagens
-        // WebElement videosButton = driver.findElement(By.id("video"));
+        // Encontrar o botão de pesquisa de videos
         new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("video"))).click();
         // imagesButton.click();
 
         // Verificar se a página de pesquisa de imagens foi carregada
         assertTrue(driver.getCurrentUrl().contains("https://www.bing.com/?scope=video&nr=1&form=Z9LH1"));
+        driver.quit();
+
+    }
+
+    @Test
+    public void testNewsSearch() {
+        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.bing.com/?cc=br");
+
+        // Encontrar o botão de pesquisa de notiticias
+        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("news"))).click();
+
+        assertTrue(driver.getCurrentUrl().contains("https://www.bing.com/news/search?q=Fatos+Principais&nvaug=%5bNewsVertical+Category%3d%22rt_MaxClass%22%5d&FORM=Z9LH3"));
         driver.quit();
 
     }
@@ -155,6 +164,40 @@ public class AtvSeleniumTest {
         driver.quit();
     }
 
+    @Test
+    public void testElementNotPresent() {
+        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+        // Navegar até uma página (por exemplo, o Bing)
+        driver.get("https://www.bing.com/?cc=br");
+
+        // Verificar se um elemento específico (por exemplo, com ID "elemento_inexistente") não está presente
+        boolean elementoExistente = false;
+        try {
+
+            // Tentar encontrar o elemento
+            WebElement element = driver.findElement(By.id("elemento_teste"));
+            elementoExistente=true;
+        }
+        catch (org.openqa.selenium.NoSuchElementException e) {
+            // Se o elemento não for encontrado, retorna falso
+            elementoExistente = false;
+        }
+
+        assertFalse(elementoExistente);
+        driver.quit();
+
+    }
+
+    
+
+    @After
+    public void tearDown() {
+        // Fechar o navegador após cada teste
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
 
 }
