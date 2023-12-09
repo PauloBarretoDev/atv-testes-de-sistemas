@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,7 +17,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class AtvSeleniumTest {
-    
+
     @Before
     public void setup(){
         System.setProperty("webdriver.chrome.driver", "./driver/chromedriver");
@@ -64,17 +67,38 @@ public class AtvSeleniumTest {
     }
 
     @Test
-    public void testSignInFunctionality() {
+    public void testImageSearch() {
         System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         driver.get("https://www.bing.com/?cc=br");
 
-        // Encontrar o link "Entrar"
-        WebElement signInLink = driver.findElement(By.id("id_l"));
-        signInLink.click();
+        // Encontrar o botão de pesquisa de imagens
+        WebElement imagesButton = driver.findElement(By.id("images"));
+        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("images"))).click();
+        // imagesButton.click();
 
-        // Verificar se a página de login foi carregada
-        assertTrue(driver.getCurrentUrl().contains("https://login.live.com/"));
+        // Verificar se a página de pesquisa de imagens foi carregada
+        assertTrue(driver.getCurrentUrl().contains("https://www.bing.com/images/feed?form=Z9LH"));
+        driver.quit();
+
     }
+
+    @Test
+    public void testMaps() {
+        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.bing.com/?cc=br");
+
+        // Encontrar o botão de pesquisa de imagens
+        WebElement mapsButton = driver.findElement(By.id("local"));
+        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("local"))).click();
+        // mapsButton.click();
+
+        // Verificar se a página de pesquisa de imagens foi carregada
+        assertTrue(driver.getCurrentUrl().contains("https://www.bing.com/maps?FORM=Z9LH2&cp=-8.05855%7E-34.885025&lvl=11.0"));        
+        driver.quit();
+
+    }
+
 
 }
