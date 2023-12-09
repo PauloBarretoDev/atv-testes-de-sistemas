@@ -1,6 +1,8 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +18,7 @@ import org.openqa.selenium.interactions.Actions;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 
 public class AtvSeleniumTest {
 
@@ -103,13 +106,47 @@ public class AtvSeleniumTest {
     }
 
     @Test
+    public void testVideoSearch() {
+        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.bing.com/?cc=br");
+
+        // Encontrar o botão de pesquisa de imagens
+        // WebElement videosButton = driver.findElement(By.id("video"));
+        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("video"))).click();
+        // imagesButton.click();
+
+        // Verificar se a página de pesquisa de imagens foi carregada
+        assertTrue(driver.getCurrentUrl().contains("https://www.bing.com/?scope=video&nr=1&form=Z9LH1"));
+        driver.quit();
+
+    }
+
+    @Test
+    public void testVideoSearchFunctionality() {
+        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.bing.com/?cc=br");
+
+        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("video"))).click();
+
+        driver.get(driver.getCurrentUrl());
+        WebElement searchBox = driver.findElement(By.name("q"));
+        searchBox.sendKeys("Trailer GTA 6");
+        searchBox.submit();
+
+        String pageTitle = driver.getTitle();
+        assertTrue(pageTitle.contains("Trailer GTA 6"));
+        driver.quit();
+    }
+
+    @Test
     public void testMaps() {
         System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         driver.get("https://www.bing.com/?cc=br");
 
         // Encontrar o botão de pesquisa de imagens
-        WebElement mapsButton = driver.findElement(By.id("local"));
         new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("local"))).click();
         // mapsButton.click();
 
@@ -117,6 +154,7 @@ public class AtvSeleniumTest {
         assertTrue(driver.getCurrentUrl().contains("https://www.bing.com/maps?FORM=Z9LH2&cp=-8.05855%7E-34.885025&lvl=11.0"));        
         driver.quit();
     }
+
 
 
 }
