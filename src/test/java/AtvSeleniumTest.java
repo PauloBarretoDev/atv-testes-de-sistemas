@@ -114,21 +114,6 @@ public class AtvSeleniumTest {
         // Verificar se a página de pesquisa de imagens foi carregada
         assertTrue(driver.getCurrentUrl().contains("https://www.bing.com/?scope=video&nr=1&form=Z9LH1"));
         driver.quit();
-
-    }
-
-    @Test
-    public void testNewsSearch() {
-        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.bing.com/?cc=br");
-
-        // Encontrar o botão de pesquisa de notiticias
-        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("news"))).click();
-
-        assertTrue(driver.getCurrentUrl().contains("https://www.bing.com/news/search?q=Fatos+Principais&nvaug=%5bNewsVertical+Category%3d%22rt_MaxClass%22%5d&FORM=Z9LH3"));
-        driver.quit();
-
     }
 
     @Test
@@ -146,6 +131,51 @@ public class AtvSeleniumTest {
 
         String pageTitle = driver.getTitle();
         assertTrue(pageTitle.contains("Trailer GTA 6"));
+        driver.quit();
+    }
+
+    @Test
+    public void testNewsSearch() {
+        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.bing.com/?cc=br");
+
+        // Encontrar o botão de pesquisa de notiticias
+        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("news"))).click();
+
+        assertTrue(driver.getCurrentUrl().contains("https://www.bing.com/news/search?q=Fatos+Principais&nvaug=%5bNewsVertical+Category%3d%22rt_MaxClass%22%5d&FORM=Z9LH3"));
+        driver.quit();
+    }
+
+    @Test
+    public void testNewsSearchFunctionality() {
+        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.bing.com/?cc=br");
+
+        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("news"))).click();
+
+        driver.get(driver.getCurrentUrl());
+        WebElement searchBox = driver.findElement(By.name("q"));
+        searchBox.clear();
+        searchBox.sendKeys("GTA 6");
+        searchBox.submit();
+
+        String pageTitle = driver.getTitle();
+        assertTrue(pageTitle.contains("GTA 6 - Bing Notícias"));
+        driver.quit();
+    }
+
+    @Test
+    public void testTranslate() {
+        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.bing.com/?cc=br");
+
+        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("dots_overflow_menu_container"))).click();
+        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("translate"))).click();
+
+        assertTrue(driver.getCurrentUrl().contains("https://www.bing.com/search?q=Bing+translate&FORM=TTAHP1"));
         driver.quit();
     }
 
