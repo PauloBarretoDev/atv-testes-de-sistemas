@@ -78,7 +78,9 @@ public class AtvSeleniumTest {
         new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("images"))).click();
 
         // Verificar se a página de pesquisa de imagens foi carregada
-        assertTrue(driver.getCurrentUrl().contains("https://www.bing.com/images/feed?form=Z9LH"));
+        String currentUrl = driver.getCurrentUrl();
+        String expected = "https://www.bing.com/images/feed?form=Z9LH";
+        assertEquals(expected, currentUrl);
         driver.quit();
 
     }
