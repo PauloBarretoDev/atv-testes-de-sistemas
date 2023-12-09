@@ -1,4 +1,4 @@
-# Atividade Final de Testes de Software 💻
+# Atividade Final de Testes de Software 💻🧪
 
 ## Atividade de Testes de Sistemas Utilizando JUnit e Selenium.
 
